@@ -1,0 +1,14 @@
+.container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-logo {
+    width: 200px;
+    height: 55px;
+}
