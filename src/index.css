@@ -49,7 +49,7 @@ body {
     flex: auto;
 }
 
-.setionWrapper {
+.sectionWrapper {
     background-color: #303030;
 }
 
@@ -62,4 +62,8 @@ body {
     -webkit-transition: .1s;
     transition: .1s;
     background-color: #444;
+}
+
+.rhap_container {
+    background-color: #303030;
 }

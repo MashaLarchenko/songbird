@@ -1,12 +1,20 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
+const useStyle = makeStyles(() => ({
+  sectionWrapper: {
+    backgroundColor: '#303030',
+  },
+}));
+
 export default function BirdList() {
+  const styles = useStyle();
   return (
-    <Card>
+    <Card className={styles.sectionWrapper}>
       <CardContent>
         <List>
           <ListItem>
