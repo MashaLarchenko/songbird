@@ -21,6 +21,9 @@ const useStyle = makeStyles(() => ({
   audio: {
     paddingTop: '5%',
   },
+  typog: {
+    color: 'white',
+  },
 }));
 
 export default function QuestionBlock() {
@@ -32,7 +35,7 @@ export default function QuestionBlock() {
           <img src="src/assets/unknownbird.jpg" alt="unknownbird" />
         </CardContent>
         <div className={classes.audio}>
-          <Typography variant="h5" component="h5">
+          <Typography variant="h5" component="h5" className={classes.typog}>
 
             *****
 

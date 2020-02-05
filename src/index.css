@@ -67,3 +67,7 @@ body {
 .rhap_container {
     background-color: #303030;
 }
+
+.MuiPaper-root{
+    color: white;
+}

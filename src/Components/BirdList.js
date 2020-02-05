@@ -9,6 +9,9 @@ const useStyle = makeStyles(() => ({
   sectionWrapper: {
     backgroundColor: '#303030',
   },
+  typog: {
+    color: 'white',
+  },
 }));
 
 export default function BirdList() {
@@ -17,27 +20,27 @@ export default function BirdList() {
     <Card className={styles.sectionWrapper}>
       <CardContent>
         <List>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Ворон
           </ListItem>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Журавль
           </ListItem>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Ласточка
           </ListItem>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Козодой
           </ListItem>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Кукушка
           </ListItem>
-          <ListItem>
+          <ListItem className={styles.typog}>
             <span className="check-btn" />
             Синица
           </ListItem>

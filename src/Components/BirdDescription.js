@@ -9,6 +9,9 @@ const useStyle = makeStyles(() => ({
   sectionWrapper: {
     backgroundColor: '#303030',
   },
+  typog: {
+    color: 'white',
+  },
 }));
 
 export default function BirdDescription() {
@@ -17,14 +20,14 @@ export default function BirdDescription() {
     <Card className={styles.sectionWrapper}>
       <CardContent>
         <img src="src/assets/unknownbird.jpg" alt="unknownbird" />
-        <Typography variant="h4" component="h4">
+        <Typography variant="h4" component="h4" className={styles.typog}>
           Bird Name
         </Typography>
-        <Typography variant="h5" component="h5">
+        <Typography variant="h5" component="h5" className={styles.typog}>
           Latin  Name
         </Typography>
         <AudioPlayer />
-        <p>
+        <p className={styles.typog}>
           Description
         </p>
       </CardContent>
