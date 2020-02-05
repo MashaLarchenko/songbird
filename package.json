@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MashaLarchenko/songbird#readme",
   "dependencies": {
+    "@material-ui/core": "^4.9.1",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-polyfill": "^6.26.0",
@@ -26,7 +27,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-h5-audio-player": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
