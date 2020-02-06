@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Context from '../context';
-import AudioPlayer from './AudioPlayer';
+import Player from './AudioPlayer';
 
 const useStyle = makeStyles(() => ({
   sectionWrapper: {
@@ -37,7 +37,7 @@ export default function BirdDescription() {
           Location
           {birdData.loc}
         </Typography>
-        <AudioPlayer />
+        <Player link={birdData.file} />
         <p className={styles.typog}>
           Description
         </p>

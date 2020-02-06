@@ -1,13 +1,21 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import PropTypes from 'prop-types';
 
-const Player = () => (
-  <AudioPlayer
+
+function Player({ link }) {
+  return (
+    <AudioPlayer
     // autoPlay
-    src="https://ccrma.stanford.edu/~jos/mp3/cello.mp3"
-    onPlay={() => console.log('onPlay')}
-  />
-);
+      src={link}
+      onPlay={() => console.log('onPlay')}
+    />
+  );
+}
+Player.propTypes = {
+  link: PropTypes.string,
+};
 
 export default Player;

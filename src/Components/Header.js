@@ -19,21 +19,20 @@ export default function Header() {
           <img src="src/assets/logo.svg" alt="logo" className="header-logo" />
           <p className="total_score">
             Score:
-            <span className="score_number">0 </span>
+            <span className="score_number"> 0 </span>
           </p>
         </nav>
         <section style={style.section}>
           <ul className="bird-family-container">
-            <li className="bird-family-item active-item">Разминка</li>
-            <li className="bird-family-item">Воробьиные</li>
-            <li className="bird-family-item">Лесные птицы</li>
-            <li className="bird-family-item">Певчие птицы</li>
-            <li className="bird-family-item">Хищные птицы</li>
-            <li className="bird-family-item">Морские птицы</li>
+            <li className="bird-family-item traning active-item">Разминка</li>
+            <li className="bird-family-item insectivores">Насекомоядные птицы</li>
+            <li className="bird-family-item predatory">Хищные птицы</li>
+            <li className="bird-family-item song">Певчие птицы</li>
+            <li className="bird-family-item forest">Лесные птицы</li>
+            <li className="bird-family-item coastal">Прибрежные птицы</li>
           </ul>
         </section>
       </header>
     </Container>
-
   );
 }

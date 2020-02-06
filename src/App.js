@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -51,32 +51,39 @@ const NextButton = withStyles({
 export default function App() {
   const [birdData, setData] = useState('no data');
   const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [levelCount, setLevel] = useState(0);
+  const [isAnswer] = useState(true);
 
-  useEffect(async () => {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = 'https://www.xeno-canto.org/api/2/recordings?query=Delichon urbicum';
-    const resp = await fetch(proxyUrl + targetUrl);
-    const data = await resp.json();
-    setData(data.recordings[0]);
-    // const photo = data.photos.photo[0];
-    // setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
-  }, []);
+  // const getBirdData = (query) => {
+  //   useCallback(async () => {
+  //     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  //     const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}`;
+  //     const resp = await fetch(proxyUrl + targetUrl);
+  //     const data = await resp.json();
+  //     setData(data.recordings[0]);
+  //     console.log('data');
+  //   }, []);
+  // };
 
-  useEffect(async () => {
-    const resp = await fetch('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=Delichon urbicum');
-    const data = await resp.json();
-    const photo = data.photos.photo[0];
-    setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
-  }, []);
+  // const getBirdImage = (query) => {
+  //   useCallback(async () => {
+  //     const resp = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`);
+  //     const data = await resp.json();
+  //     const photo = data.photos.photo[0];
+  //     setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
+  //     console.log('img');
+  //   }, []);
+  // };
+
   return (
     <Context.Provider value={{ birdData, image }}>
       <Header />
       <QuestionBlock />
       <Container style={style.questContainer}>
-        <BirdList />
+        <BirdList levelCount={levelCount} setData={setData} setImage={setImage} />
         <BirdDescription />
       </Container>
-      <NextButton variant="outlined" disabled>Next level</NextButton>
+      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswer}>Next level</NextButton>
     </Context.Provider>
   );
 }
