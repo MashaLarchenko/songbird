@@ -16,7 +16,7 @@ const useStyle = makeStyles(() => ({
     display: 'grid',
     gridTemplateColumns: '1fr 3fr',
     padding: '2%',
-    backgroundColor: '#303030',
+    backgroundColor: 'rgba(48,48,48, .9)',
   },
   audio: {
     paddingTop: '5%',
