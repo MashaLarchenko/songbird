@@ -52,7 +52,12 @@ export default function App() {
   const [birdData, setData] = useState('no data');
   const [image, setImage] = useState('src/assets/unknownbird.jpg');
   const [levelCount, setLevel] = useState(0);
-  const [isAnswer] = useState(true);
+  const [isAnswerState, setAnswerState] = useState({
+    noRightAnswer: true,
+    startQ: false,
+  });
+  console.log(isAnswerState);
+
 
   // const getBirdData = (query) => {
   //   useCallback(async () => {
@@ -80,10 +85,16 @@ export default function App() {
       <Header />
       <QuestionBlock />
       <Container style={style.questContainer}>
-        <BirdList levelCount={levelCount} setData={setData} setImage={setImage} />
+        <BirdList
+          levelCount={levelCount}
+          setData={setData}
+          setImage={setImage}
+          setAnswerState={setAnswerState}
+          isAnswerState={isAnswerState}
+        />
         <BirdDescription />
       </Container>
-      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswer}>Next level</NextButton>
+      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswerState.rightAnswer}>Next level</NextButton>
     </Context.Provider>
   );
 }

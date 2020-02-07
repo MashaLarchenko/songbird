@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 function Player({ link }) {
   return (
     <AudioPlayer
-    // autoPlay
+      autoPlay={false}
       src={link}
       onPlay={() => console.log('onPlay')}
     />
