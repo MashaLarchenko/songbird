@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
+import Context from '../context';
 
 const useStyle = makeStyles(() => ({
   typog: {
@@ -10,28 +11,15 @@ const useStyle = makeStyles(() => ({
 }));
 
 function BirdItem({
-  name, species, setImage, setData, setAnswerState, isAnswerState,
+  name, species, setImage, setData, setAnswerState, isAnswerState, id,
 }) {
   const [answer, setStatus] = useState('check-btn');
   const styles = useStyle();
+  const {
+    getBirdData, getBirdImage, rightAnswer, setRightAnswer,
+  } = useContext(Context);
 
-  // let checkBtn = 'check-btn';
-
-  const getBirdData = async (query) => {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}`;
-    const resp = await fetch(proxyUrl + targetUrl);
-    const data = await resp.json();
-    return data;
-  };
-
-  const getBirdImage = async (query) => {
-    const resp = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`);
-    const data = await resp.json();
-    return data.photos.photo[0];
-  };
-
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     Promise.all([getBirdData(species), getBirdImage(species)])
       .then((values) => {
         const [data, photo] = values;
@@ -40,21 +28,35 @@ function BirdItem({
         setAnswerState({
           noRightAnswer: true,
           startQ: true,
+          selectedBird: species,
+          birdId: id,
         });
+        if (rightAnswer.title === species) {
+          setAnswerState({
+            noRightAnswer: false,
+            startQ: true,
+            selectedBird: species,
+            birdId: id,
+          });
+          setRightAnswer({
+            ...rightAnswer,
+            audio: data.recordings[0].file,
+            image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+          });
+          console.log(rightAnswer);
+        }
       });
     if (isAnswerState.noRightAnswer) {
       setStatus('wrongAnswer');
-      // console.log(checkBtn);
     } else {
       setStatus('rightAnswer');
-      // console.log(checkBtn);
     }
-  };
+    // console.log(isAnswerState, rightAnswer);
+  }, [species]);
 
   return (
 
     <ListItem className={styles.typog}>
-      {console.log(answer) }
       <button
         type="button"
         onClick={clickHandler}
@@ -72,7 +74,8 @@ BirdItem.propTypes = {
   setImage: PropTypes.func.isRequired,
   setData: PropTypes.func.isRequired,
   setAnswerState: PropTypes.func.isRequired,
-  isAnswerState: PropTypes.objectOf(PropTypes.object).isRequired,
+  isAnswerState: PropTypes.objectOf(PropTypes.bool).isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default BirdItem;

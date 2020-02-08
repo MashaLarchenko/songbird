@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import QuestionBlock from './Components/QuestionBlock';
 import BirdList from './Components/BirdList';
 import BirdDescription from './Components/BirdDescription';
 import Context from './context';
+import birdState from './Components/birdState';
 
 
 const style = {
@@ -51,39 +52,62 @@ const NextButton = withStyles({
 export default function App() {
   const [birdData, setData] = useState('no data');
   const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [rightAnswer, setRightAnswer] = useState({
+    id: Math.floor(Math.random() * (6 - 1 + 1)) + 1,
+    cryptTitle: '*****',
+    title: 'Tetrastes bonasia',
+    cryptImage: 'src/assets/unknownbird.jpg',
+    image: '',
+    audio: '',
+  });
   const [levelCount, setLevel] = useState(0);
   const [isAnswerState, setAnswerState] = useState({
     noRightAnswer: true,
     startQ: false,
   });
-  console.log(isAnswerState);
 
+  const getBirdData = async (query) => {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}`;
+    const resp = await fetch(proxyUrl + targetUrl);
+    const data = await resp.json();
+    return data;
+  };
 
-  // const getBirdData = (query) => {
-  //   useCallback(async () => {
-  //     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  //     const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}`;
-  //     const resp = await fetch(proxyUrl + targetUrl);
-  //     const data = await resp.json();
-  //     setData(data.recordings[0]);
-  //     console.log('data');
-  //   }, []);
-  // };
+  const getBirdImage = async (query) => {
+    const resp = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`);
+    const data = await resp.json();
+    return data.photos.photo[0];
+  };
 
-  // const getBirdImage = (query) => {
-  //   useCallback(async () => {
-  //     const resp = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`);
-  //     const data = await resp.json();
-  //     const photo = data.photos.photo[0];
-  //     setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
-  //     console.log('img');
-  //   }, []);
-  // };
+  useEffect(() => {
+    const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+    const answerBird = birdState[0][levelCount][random - 1];
+    Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)])
+      .then((values) => {
+        const [data, imgSrc] = values;
+        setRightAnswer({
+          id: random,
+          title: answerBird.species,
+          image: `https://farm${imgSrc.farm}.staticflickr.com/${imgSrc.server}/${imgSrc.id}_${imgSrc.secret}.jpg`,
+          audio: data.recordings[0].file,
+          cryptTitle: '*****',
+          cryptImage: 'src/assets/unknownbird.jpg',
+        });
+      });
+  }, [levelCount]);
 
   return (
-    <Context.Provider value={{ birdData, image }}>
+    <Context.Provider value={{
+      birdData, image, rightAnswer, setRightAnswer, getBirdData, getBirdImage,
+    }}
+    >
       <Header />
-      <QuestionBlock />
+      <QuestionBlock
+        rightAnswer={rightAnswer}
+        levelCount={levelCount}
+        isAnswerState={isAnswerState.noRightAnswer}
+      />
       <Container style={style.questContainer}>
         <BirdList
           levelCount={levelCount}
@@ -92,9 +116,15 @@ export default function App() {
           setAnswerState={setAnswerState}
           isAnswerState={isAnswerState}
         />
-        <BirdDescription />
+        <BirdDescription
+          levelCount={levelCount}
+          selectedBirdId={isAnswerState.birdId}
+          startQ={isAnswerState.startQ}
+        />
       </Container>
-      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswerState.rightAnswer}>Next level</NextButton>
+      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswerState.noRightAnswer}>
+        Next level
+      </NextButton>
     </Context.Provider>
   );
 }
