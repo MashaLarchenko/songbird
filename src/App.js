@@ -6,7 +6,7 @@ import Header from './Components/Header';
 import QuestionBlock from './Components/QuestionBlock';
 import BirdList from './Components/BirdList';
 import BirdDescription from './Components/BirdDescription';
-import Context from './context';
+// import Context from './context';
 import birdState from './Components/birdState';
 
 
@@ -52,6 +52,10 @@ const NextButton = withStyles({
 export default function App() {
   const [birdData, setData] = useState('no data');
   const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [score, setScore] = useState({
+    score: 0,
+    try: 0,
+  });
   const [rightAnswer, setRightAnswer] = useState({
     id: Math.floor(Math.random() * (6 - 1 + 1)) + 1,
     cryptTitle: '*****',
@@ -63,8 +67,11 @@ export default function App() {
   const [levelCount, setLevel] = useState(0);
   const [isAnswerState, setAnswerState] = useState({
     noRightAnswer: true,
+    isAnswered: false,
     startQ: false,
+    color: 'check-btn',
   });
+  // const [classes, setClasses] = useState(['check-dot']);
 
   const getBirdData = async (query) => {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -79,6 +86,56 @@ export default function App() {
     const data = await resp.json();
     return data.photos.photo[0];
   };
+
+  const clickHandler = (species, id) => {
+    Promise.all([getBirdData(species), getBirdImage(species)])
+      .then((values) => {
+        const [data, photo] = values;
+        setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
+        setData(data.recordings[0]);
+        if (rightAnswer.title === species) {
+          setAnswerState({
+            noRightAnswer: false,
+            startQ: true,
+            selectedBird: species,
+            birdId: id,
+            color: 'rightAnswer',
+          });
+          setRightAnswer({
+            ...rightAnswer,
+            audio: data.recordings[0].file,
+            image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+          });
+          setScore({
+            score: 5 - score.try,
+            try: score.try + 1,
+          });
+        } else {
+          setAnswerState({
+            noRightAnswer: true,
+            isAnswered: true,
+            startQ: true,
+            selectedBird: species,
+            birdId: id,
+            color: 'wrongAnswer',
+          });
+          setScore({
+            ...score,
+            try: score.try + 1,
+          });
+        }
+      });
+  };
+  // useEffect(() => {
+  //   if (isAnswerState.noRightAnswer && isAnswerState.startQ) {
+  //     setClasses('wrongAnswer');
+  //     console.log(classes);
+  //   } else if (!isAnswerState.noRightAnswer && isAnswerState.startQ) {
+  //     setClasses('rightAnswer');
+  //     console.log(classes);
+  //   }
+  // }, [isAnswerState]);
+
 
   useEffect(() => {
     const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
@@ -98,14 +155,10 @@ export default function App() {
   }, [levelCount]);
 
   return (
-    <Context.Provider value={{
-      birdData, image, rightAnswer, setRightAnswer, getBirdData, getBirdImage,
-    }}
-    >
-      <Header />
+    <>
+      <Header score={score} />
       <QuestionBlock
         rightAnswer={rightAnswer}
-        levelCount={levelCount}
         isAnswerState={isAnswerState.noRightAnswer}
       />
       <Container style={style.questContainer}>
@@ -115,16 +168,29 @@ export default function App() {
           setImage={setImage}
           setAnswerState={setAnswerState}
           isAnswerState={isAnswerState}
+          clickHandler={clickHandler}
+          // classes={classes}
         />
         <BirdDescription
           levelCount={levelCount}
           selectedBirdId={isAnswerState.birdId}
           startQ={isAnswerState.startQ}
+          image={image}
+          birdData={birdData}
         />
       </Container>
-      <NextButton variant="outlined" onClick={() => { setLevel(levelCount + 1); }} disabled={isAnswerState.noRightAnswer}>
+      <NextButton
+        variant="outlined"
+        onClick={() => {
+          setLevel(levelCount + 1); setScore({
+            ...score,
+            try: 0,
+          });
+        }}
+        disabled={isAnswerState.noRightAnswer}
+      >
         Next level
       </NextButton>
-    </Context.Provider>
+    </ >
   );
 }

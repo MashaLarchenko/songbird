@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import Context from '../context';
+// import Context from '../context';
 import Player from './AudioPlayer';
 import birdState from './birdState';
 
@@ -21,11 +22,11 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-function BirdDescription({ levelCount, selectedBirdId, startQ }) {
+function BirdDescription({
+  levelCount, selectedBirdId, startQ, birdData, image,
+}) {
   const styles = useStyle();
-  const { birdData, image } = useContext(Context);
   const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
-  console.log(birdData, image);
 
   return (
     <Card className={styles.sectionWrapper}>

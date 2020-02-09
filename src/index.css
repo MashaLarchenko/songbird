@@ -58,13 +58,13 @@ body {
 }
 
 .check-btn {
-  display: inline-block;
+  /* display: inline-block;
   width: 10px;
   height: 10px;
   margin-right: 15px;
   border-radius: 50%;
   -webkit-transition: 0.1s;
-  transition: 0.1s;
+  transition: 0.1s; */
   background-color: #444;
 }
 
@@ -78,24 +78,24 @@ body {
 }
 
 .wrongAnswer {
-  display: inline-block;
+  /* display: inline-block;
   width: 10px;
   height: 10px;
   margin-right: 15px;
   border-radius: 50%;
   -webkit-transition: 0.1s;
-  transition: 0.1s;
+  transition: 0.1s; */
   background-color: rgb(250, 1, 1);
 }
 
 .rightAnswer{
-  display: inline-block;
+  /* display: inline-block;
   width: 10px;
   height: 10px;
   margin-right: 15px;
   border-radius: 50%;
   -webkit-transition: 0.1s;
-  transition: 0.1s;
+  transition: 0.1s; */
   background-color: rgb(7, 255, 40);
 
 }

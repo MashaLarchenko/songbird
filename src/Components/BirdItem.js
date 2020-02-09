@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
-import Context from '../context';
+// import Context from '../context';
 
 const useStyle = makeStyles(() => ({
   typog: {
@@ -11,57 +11,18 @@ const useStyle = makeStyles(() => ({
 }));
 
 function BirdItem({
-  name, species, setImage, setData, setAnswerState, isAnswerState, id,
+  name, species, id, clickHandler, classes, isAnswerState,
 }) {
-  const [answer, setStatus] = useState('check-btn');
   const styles = useStyle();
-  const {
-    getBirdData, getBirdImage, rightAnswer, setRightAnswer,
-  } = useContext(Context);
-
-  const clickHandler = useCallback(() => {
-    Promise.all([getBirdData(species), getBirdImage(species)])
-      .then((values) => {
-        const [data, photo] = values;
-        setImage(`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`);
-        setData(data.recordings[0]);
-        setAnswerState({
-          noRightAnswer: true,
-          startQ: true,
-          selectedBird: species,
-          birdId: id,
-        });
-        if (rightAnswer.title === species) {
-          setAnswerState({
-            noRightAnswer: false,
-            startQ: true,
-            selectedBird: species,
-            birdId: id,
-          });
-          setRightAnswer({
-            ...rightAnswer,
-            audio: data.recordings[0].file,
-            image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-          });
-          console.log(rightAnswer);
-        }
-      });
-    if (isAnswerState.noRightAnswer) {
-      setStatus('wrongAnswer');
-    } else {
-      setStatus('rightAnswer');
-    }
-    // console.log(isAnswerState, rightAnswer);
-  }, [species]);
+  console.log(classes);
 
   return (
-
     <ListItem className={styles.typog}>
       <button
         type="button"
-        onClick={clickHandler}
+        onClick={clickHandler.bind(null, species, id)}
+        className={isAnswerState.color}
       >
-        <span className={answer} />
         {name}
       </button>
     </ListItem>
@@ -71,11 +32,13 @@ function BirdItem({
 BirdItem.propTypes = {
   name: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
-  setImage: PropTypes.func.isRequired,
-  setData: PropTypes.func.isRequired,
-  setAnswerState: PropTypes.func.isRequired,
+  // setImage: PropTypes.func.isRequired,
+  // setData: PropTypes.func.isRequired,
+  // setAnswerState: PropTypes.func.isRequired,
   isAnswerState: PropTypes.objectOf(PropTypes.bool).isRequired,
   id: PropTypes.number.isRequired,
+  clickHandler: PropTypes.func.isRequired,
+  classes: PropTypes.string.isRequired,
 };
 
 export default BirdItem;

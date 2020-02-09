@@ -17,12 +17,20 @@ const useStyle = makeStyles(() => ({
 
 function BirdList({
   levelCount,
-  setImage, setData, setAnswerState, isAnswerState,
+  setImage, setData, setAnswerState, isAnswerState, clickHandler,
 }) {
   const styles = useStyle();
-  console.log(isAnswerState);
-  // const { birdData } = useContext(Context);
   const birdList = birdState[0][levelCount];
+  // const [classes, setClasses] = useState(['check-dot']);
+  // useEffect(() => {
+  //   if (isAnswerState.noRightAnswer && isAnswerState.startQ) {
+  //     setClasses('wrongAnswer');
+  //     console.log(classes);
+  //   } else if (!isAnswerState.noRightAnswer && isAnswerState.startQ) {
+  //     setClasses('rightAnswer');
+  //     console.log(classes);
+  //   }
+  // }, [isAnswerState]);
 
   return (
     <Card className={styles.sectionWrapper}>
@@ -38,6 +46,8 @@ function BirdList({
               setData={setData}
               setAnswerState={setAnswerState}
               isAnswerState={isAnswerState}
+              clickHandler={clickHandler}
+              // classes={classes}
             />
           ))}
         </List>
@@ -56,7 +66,11 @@ BirdList.propTypes = {
     startQ: PropTypes.bool,
     selectedBird: PropTypes.string,
     birdId: PropTypes.number,
+    isAnswered: PropTypes.bool,
   }).isRequired,
+  clickHandler: PropTypes.func.isRequired,
+  // classes: PropTypes.string.isRequired,
+  // setStatus: PropTypes.func.isRequired,
 };
 
 export default BirdList;

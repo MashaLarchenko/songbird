@@ -1,8 +1,9 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 
-export default function Header() {
+function Header({ score }) {
   const style = {
     section: {
       color: 'red',
@@ -19,7 +20,9 @@ export default function Header() {
           <img src="src/assets/logo.svg" alt="logo" className="header-logo" />
           <p className="total_score">
             Score:
-            <span className="score_number"> 0 </span>
+            <span className="score_number">
+              {score.score}
+            </span>
           </p>
         </nav>
         <section style={style.section}>
@@ -36,3 +39,12 @@ export default function Header() {
     </Container>
   );
 }
+
+Header.propTypes = {
+  score: PropTypes.shape({
+    score: PropTypes.number,
+    try: PropTypes.number,
+  }).isRequired,
+};
+
+export default Header;

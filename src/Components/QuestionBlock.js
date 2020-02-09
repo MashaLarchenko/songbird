@@ -30,9 +30,6 @@ const useStyle = makeStyles(() => ({
 
 export default function QuestionBlock({ rightAnswer, isAnswerState }) {
   const classes = useStyle();
-  console.log(rightAnswer);
-  // const { birdData } = useContext(Context);
-  // const rightBird = birdState[0][levelCount][rightAnswer - 1];
   return (
     <Container>
       <Card className={classes.container}>
