@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-  width: 70%;
+  width: 85%;
   margin: 0 auto;
   margin-top: 35px;
 }
@@ -75,22 +75,52 @@ body {
 }
 
 .wrongAnswer {
-  background-color: rgba(252, 0, 0, 0.8);
+  background-color: rgba(235, 56, 56, 0.8);
 }
 
 .wrongAnswer:hover{
-  background-color: rgb(252, 0, 0);
+  background-color: rgb(235, 56, 56);
 }
 
 .rightAnswer{
-  background-color: rgba(7, 255, 40, 0.8);
+  background-color: rgba(73, 240, 95, 0.8);
 }
 
 .rightAnswer:hover{
-  background-color: rgb(7, 255, 40);
+  background-color: rgb(73, 240, 95);
 }
 
 .birdButton{
   width: 100%;
   padding: 2%;
+  border-radius: 10px;
+}
+
+.makeStyles-image-92 {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 5px;
+}
+
+.cardHeader {
+  display: grid;
+  /* grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 1fr); */
+  grid-template-areas: "image name"
+                       "image latinName";
+ color:white;
+}
+
+.name {
+  grid-area: 'name';
+  color: 'white';
+}
+
+.latinName {
+  grid-area: 'latinName';
+  color: 'white';
+}
+
+.MuiPaper-root .description {
+  color:white;
 }

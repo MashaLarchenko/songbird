@@ -24,6 +24,7 @@ const useStyle = makeStyles(() => ({
     },
     image: {
         width: '100%',
+        borderRadius: '5px'
     },
 }));
 

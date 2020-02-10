@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,50 +10,50 @@ import Player from './AudioPlayer';
 import birdState from './birdState';
 
 const useStyle = makeStyles(() => ({
-    sectionWrapper: {
-        backgroundColor: 'rgba(48,48,48, .9)',
-    },
-    typog: {
-        color: 'white',
-    },
-    image: {
-        width: '35%',
-    },
+  sectionWrapper: {
+    backgroundColor: 'rgba(48,48,48, .9)',
+  },
+  image: {
+    width: '35%',
+    gridArea: 'image'
+  },
 }));
 
 function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image }) {
-    const styles = useStyle();
-    const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
+  const styles = useStyle();
+  const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
 
-    return (
-      <Card className={styles.sectionWrapper}>
-          {startQ ? (
-          <CardContent>
-                    <img src={image} alt="unknownbird" className={styles.image} />
-                    <Typography variant="h4" component="h4" className={styles.typog}>
+  return (
+    <Card className={styles.sectionWrapper}>
+      {startQ ? (
+        <CardContent>
+          <div className={'cardHeader'}>
+            <img src={image} alt="unknownbird" className={styles.image} />
+            <Typography variant="h5" component="h5" className={'name'}>
               {birdData.en}
             </Typography>
-                    <Typography variant="h5" component="h5" className={styles.typog}>
+            <Typography variant="h6" component="h6"  className={'latinName'}>
               {selectedBird.species}
             </Typography>
-                    <Typography variant="h5" component="h5" className={styles.typog}>
+          </div>
+          {/* <Typography variant="h5" component="h5" className={styles.typog}>
               Location
                         {birdData.loc}
-            </Typography>
-                    <Player link={birdData.file} />
-                  <p className={styles.typog}>{selectedBird.description}</p>
-                </CardContent>
-            ) : (
-                'no data'
-            )}
-        </Card>
-    );
+            </Typography> */}
+          <Player link={birdData.file} />
+          <p className={'description'}>{selectedBird.description}</p>
+        </CardContent>
+      ) : (
+        'no data'
+      )}
+    </Card>
+  );
 }
 
 BirdDescription.propTypes = {
-    levelCount: PropTypes.number.isRequired,
-    selectedBirdId: PropTypes.number,
-    startQ: PropTypes.bool.isRequired,
+  levelCount: PropTypes.number.isRequired,
+  selectedBirdId: PropTypes.number,
+  startQ: PropTypes.bool.isRequired,
 };
 
 export default BirdDescription;

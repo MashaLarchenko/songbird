@@ -130,6 +130,7 @@ export default function App() {
 
                 setRightAnswer({
                     ...rightAnswer,
+                    name: `${answerBird.name}(${answerBird.species})`,
                     audio: data.recordings[0].file,
                     image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
                 });
