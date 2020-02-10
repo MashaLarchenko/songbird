@@ -2,47 +2,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 // import Context from '../context';
-import Player from './AudioPlayer';
+import DescriptionContent from './DescriptionContent';
 import birdState from './birdState';
 
 const useStyle = makeStyles(() => ({
   sectionWrapper: {
     backgroundColor: 'rgba(48,48,48, .9)',
   },
-  image: {
-    width: '35%',
-    gridArea: 'image'
-  },
 }));
 
 function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image }) {
   const styles = useStyle();
   const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
-
   return (
     <Card className={styles.sectionWrapper}>
       {startQ ? (
-        <CardContent>
-          <div className={'cardHeader'}>
-            <img src={image} alt="unknownbird" className={styles.image} />
-            <Typography variant="h5" component="h5" className={'name'}>
-              {birdData.en}
-            </Typography>
-            <Typography variant="h6" component="h6"  className={'latinName'}>
-              {selectedBird.species}
-            </Typography>
-          </div>
-          {/* <Typography variant="h5" component="h5" className={styles.typog}>
-              Location
-                        {birdData.loc}
-            </Typography> */}
-          <Player link={birdData.file} />
-          <p className={'description'}>{selectedBird.description}</p>
-        </CardContent>
+       <DescriptionContent image={image} selectedBird={selectedBird} birdData={birdData}/>
       ) : (
         'no data'
       )}

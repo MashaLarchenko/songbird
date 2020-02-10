@@ -112,15 +112,26 @@ body {
 }
 
 .name {
-  grid-area: 'name';
-  color: 'white';
+  grid-area: name;
+  color: white;
 }
 
 .latinName {
-  grid-area: 'latinName';
-  color: 'white';
+  grid-area: latinName;
+  color: white;
 }
 
 .MuiPaper-root .description {
   color:white;
+}
+
+.cardImage {
+  width: 220px;
+  height: 175px;
+  border-radius: 5px;
+  grid-area: image;
+}
+
+.rhap_container.listItemAudio {
+  display: none;
 }

@@ -10,47 +10,40 @@ import Player from './AudioPlayer';
 // import birdState from './birdState';
 
 const useStyle = makeStyles(() => ({
-    container: {
-        display: 'grid',
-        gridTemplateColumns: '1fr 3fr',
-        padding: '2%',
-        backgroundColor: 'rgba(48,48,48, .9)',
-    },
-    audio: {
-        paddingTop: '5%',
-    },
-    typog: {
-        color: 'white',
-    },
-    image: {
-        width: '100%',
-        borderRadius: '5px'
-    },
+  container: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 3fr',
+    padding: '2%',
+    backgroundColor: 'rgba(48,48,48, .9)',
+  },
+  audio: {
+    paddingTop: '5%',
+  },
+  typog: {
+    color: 'white',
+  },
+  image: {
+    width: '100%',
+    borderRadius: '5px',
+  },
 }));
 
 export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered }) {
-    const classes = useStyle();
-    return (
-      <Container>
-          <Card className={classes.container}>
-              <CardContent>
-              {isAnswerState && !isAnswered ? (
-                        <img
-                  src={rightAnswer.cryptImage}
-                            alt="unknownbird"
-                  className={classes.image}
-                />
-                    ) : (
-                      <img src={rightAnswer.image} alt="unknownbird" className={classes.image} />
-                    )}
-            </CardContent>
-                <div className={classes.audio}>
-              <Typography variant="h5" component="h5" className={classes.typog}>
-                      {isAnswerState ? rightAnswer.cryptTitle : rightAnswer.name}
-                    </Typography>
-                    <Player link={rightAnswer.audio} />
-            </div>
-            </Card>
-        </Container>
-    );
+    console.log(rightAnswer.image);
+  const classes = useStyle();
+  return (
+    <Container>
+      <Card className={classes.container}>
+        <CardContent>
+            <img src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image} alt="unknownbird" className={classes.image} />
+        </CardContent>
+        <div className={classes.audio}>
+          <Typography variant="h5" component="h5" className={classes.typog}>
+            {isAnswerState ? rightAnswer.cryptTitle : rightAnswer.name}
+          </Typography>
+          <Player link={rightAnswer.audio} play={false}/>
+        </div>
+      </Card>
+    </Container>
+  );
 }
