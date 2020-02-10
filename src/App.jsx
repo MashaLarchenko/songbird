@@ -179,7 +179,7 @@ export default function App() {
 
   return (
     <>
-      <Header score={score} />
+      <Header score={score} level={levelCount} />
       <QuestionBlock
         rightAnswer={rightAnswer}
         isAnswerState={birdData.status.noRightAnswer}

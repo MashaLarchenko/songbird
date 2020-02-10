@@ -135,3 +135,7 @@ body {
 .rhap_container.listItemAudio {
   display: none;
 }
+
+.bird-family-item.active-item{
+    background-color: #14ac85;
+}
