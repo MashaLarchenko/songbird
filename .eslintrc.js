@@ -1,4 +1,5 @@
 module.exports = {
+  parser: "babel-eslint",
   env: {
     browser: true,
     es6: true,
@@ -6,6 +7,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb', "eslint:recommended",
+    "plugin:prettier/recommended",
     // "plugin:@typescript-eslint/eslint-recommended",
     // "plugin:@typescript-eslint/recommended"
   ],
@@ -22,9 +24,12 @@ module.exports = {
   },
   plugins: [
     'react',
+    "prettier",
     // "@typescript-eslint/eslint-plugin",
   ],
   rules: { 
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-  },
+    "strict": 0,
+    "prettier/prettier": ["error"],
+  }
 };
