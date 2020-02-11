@@ -10,6 +10,7 @@ import BirdDescription from './Components/BirdDescription';
 import birdState from './Components/birdState';
 import LastPage from './Components/LastPage';
 import getRightAndwerData from './Components/rightAnswer';
+import Player from './Components/AudioPlayer';
 
 const style = {
   questContainer: {
@@ -22,9 +23,6 @@ const style = {
 
 export default function App() {
   const [birdData, setData] = useState({
-    data: 'no data',
-    image: 'src/assets/unknownbird.jpg',
-    song: ' ',
     status: {
       noRightAnswer: true,
       isAnswered: false,
@@ -32,7 +30,8 @@ export default function App() {
       isFinished: false,
     },
   });
-  // const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [data, setBirdData] = useState('src/assets/unknownbird.jpg');
   const [score, setScore] = useState({
     score: 0,
     try: 0,
@@ -40,14 +39,41 @@ export default function App() {
   const [rightAnswer, setRightAnswer] = useState({
     id: Math.floor(Math.random() * (6 - 1 + 1)) + 1,
     cryptTitle: '*****',
-    title: 'Tetrastes bonasia',
+    title: '',
     cryptImage: 'src/assets/unknownbird.jpg',
     image: '',
     audio: '',
   });
-  const [levelCount, setLevel] = useState(5);
-
+  const [levelCount, setLevel] = useState(0);
   const [loading, setLoading] = useState(false);
+  //   const [clickSong, setSong] = useState('');
+
+  useEffect(() => {
+    setData({
+        ...birdData,
+        status: {
+          ...birdData.status,
+          noRightAnswer: true,
+          isAnswered: false,
+        },
+      });
+    const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+    const answerBird = birdState[0][levelCount][random - 1];
+    Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)]).then(
+      values => {
+        const [data, imgSrc] = values;
+        setRightAnswer({
+          id: random,
+          title: answerBird.species,
+          name: `${answerBird.name}(${answerBird.species})`,
+          image: `https://farm${imgSrc.farm}.staticflickr.com/${imgSrc.server}/${imgSrc.id}_${imgSrc.secret}.jpg`,
+          audio: data.recordings[0].file,
+          cryptTitle: '*****',
+          cryptImage: 'src/assets/unknownbird.jpg',
+        });
+      }
+    );
+  }, [levelCount]);
 
   const getBirdData = async query => {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -66,90 +92,78 @@ export default function App() {
   };
 
   const clickHandler = (species, id) => {
+    // setData({
+    //   ...birdData,
+    //   status: {
+    //     ...birdData.status,
+    //     startQ: true,
+    //   },
+    // });
     const answerBird = birdState[0][levelCount][id - 1];
-    Promise.all([getBirdData(species), getBirdImage(species)]).then(values => {
-      const [data, photo] = values;
+    setLoading(true);
+    getBirdData(species).then(data => {
+      setBirdData(data.recordings[0]);
+      setLoading(false);
+    });
+    getBirdImage(species).then(photo => {
+      setImage(
+        `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
+      );
       if (rightAnswer.title === species) {
-        answerBird.status[1] = 'rightAnswer';
-        console.log(birdData);
-        setData({
-          ...birdData,
-          status: {
-            ...birdData.status,
-            noRightAnswer: false,
-            isAnswered: true,
-            startQ: true,
-            selectedBird: species,
-            birdId: id,
-          },
-          data: data.recordings[0],
-          image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-          song: 'src/assets/correct-answer.mp3',
-        });
-        console.log(birdData, 2);
-
         setRightAnswer({
           ...rightAnswer,
           name: `${answerBird.name}(${answerBird.species})`,
-          audio: data.recordings[0].file,
           image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-        });
-        setScore({
-          score: score.score + (5 - score.try),
-          try: score.try + 1,
-        });
-      } else {
-        answerBird.status[1] = 'wrongAnswer';
-        setData({
-          ...birdData,
-          status: {
-            ...birdData.status,
-            noRightAnswer: true,
-            startQ: true,
-            selectedBird: species,
-            birdId: id,
-          },
-          data: data.recordings[0],
-          image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-          song: 'src/assets/wrong-answer.mp3',
-        });
-        setScore({
-          ...score,
-          try: score.try + 1,
         });
       }
     });
-    console.log(birdData, 3);
-  };
 
-  useEffect(() => {
-    const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-    const answerBird = birdState[0][levelCount][random - 1];
-    console.log(birdState[0], levelCount, answerBird);
-    Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)]).then(
-      values => {
-        const [data, imgSrc] = values;
-        setData({
-          ...birdData,
-          status: {
-            ...birdData.status,
-            noRightAnswer: true,
-            isAnswered: false,
-            startQ: false,
-          },
-        });
-        setRightAnswer({
-          id: random,
-          title: answerBird.species,
-          name: `${answerBird.name}(${answerBird.species})`,
-          image: `https://farm${imgSrc.farm}.staticflickr.com/${imgSrc.server}/${imgSrc.id}_${imgSrc.secret}.jpg`,
-          audio: data.recordings[0].file,
-          cryptTitle: '*****',
-          cryptImage: 'src/assets/unknownbird.jpg',
-        });
-      }
-    );
-  }, [levelCount]);
+    if (rightAnswer.title === species) {
+      answerBird.status[1] = 'rightAnswer';
+      setData({
+        ...birdData,
+        status: {
+          ...birdData.status,
+          noRightAnswer: false,
+          isAnswered: true,
+          selectedBird: species,
+          birdId: id,
+          startQ: true,
+        },
+        // song: 'src/assets/correct-answer.mp3',
+      });
+      //   setSong('src/assets/correct-answer.mp3');
+
+      // setRightAnswer({
+      //   ...rightAnswer,
+      //   name: `${answerBird.name}(${answerBird.species})`,
+      //   audio: data.recordings[0].file,
+      //   image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+      // });
+      setScore({
+        score: score.score + (5 - score.try),
+        try: score.try + 1,
+      });
+    } else {
+      answerBird.status[1] = 'wrongAnswer';
+      setData({
+        ...birdData,
+        status: {
+          ...birdData.status,
+          noRightAnswer: true,
+          selectedBird: species,
+          birdId: id,
+          startQ: true,
+        },
+        // song: 'src/assets/wrong-answer.mp3',
+      });
+      //   setSong('src/assets/wrong-answer.mp3');
+      setScore({
+        ...score,
+        try: score.try + 1,
+      });
+    }
+  };
 
   return !birdData.status.isFinished ? (
     <>
@@ -170,10 +184,11 @@ export default function App() {
           levelCount={levelCount}
           selectedBirdId={birdData.status.birdId}
           startQ={birdData.status.startQ}
-          image={birdData.image}
-          birdData={birdData.data}
+          image={image}
+          birdData={data}
           loading={loading}
         />
+        {/* {birdData.status.startQ ? <Player link={clickSong} play={true} style={'listItemAudio'} /> : null} */}
       </Container>
       <Button
         variant="outlined"
@@ -187,6 +202,7 @@ export default function App() {
                 status: {
                   ...birdData.status,
                   isFinished: true,
+                  startQ: false,
                 },
               })
             : setLevel(0);
@@ -201,6 +217,13 @@ export default function App() {
       </Button>
     </>
   ) : (
-    <LastPage score={score} levelCount={levelCount} setData={setData} birdData={birdData} setScore={setScore} setLevel={setLevel} />
+    <LastPage
+      score={score}
+      levelCount={levelCount}
+      setData={setData}
+      birdData={data}
+      setScore={setScore}
+      setLevel={setLevel}
+    />
   );
 }

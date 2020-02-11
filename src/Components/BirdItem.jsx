@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
-import Player from './AudioPlayer';
+// import Player from './AudioPlayer';
 
 // import Context from '../context';
 
@@ -14,7 +14,6 @@ const useStyle = makeStyles(() => ({
 
 function BirdItem({ name, species, id, clickHandler, classes, birdData }) {
   const styles = useStyle();
-  console.log(birdData.song);
   return (
     <ListItem className={styles.typog}>
       <button
@@ -26,7 +25,7 @@ function BirdItem({ name, species, id, clickHandler, classes, birdData }) {
       >
         {name}
       </button>
-      <Player link={birdData.song} play={true} style={'listItemAudio'}/>
+      {/* <Player link={birdData.song} play={true} style={'listItemAudio'}/> */}
     </ListItem>
   );
 }

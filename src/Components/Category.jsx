@@ -20,7 +20,6 @@ export default function Category({ level }) {
     <section>
       <ul className="bird-family-container">
         {questionCategory.map((item, index) => {
-            console.log(level, index);
             return <li className={index === level? "bird-family-item active-item" : "bird-family-item"} key={index}>{item}</li>;
         })}
       </ul>

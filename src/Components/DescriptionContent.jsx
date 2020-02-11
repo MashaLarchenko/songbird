@@ -10,7 +10,7 @@ export default function DescriptionContent({image, birdData, selectedBird, loadi
       <div className="cardHeader">
         <img src={image} alt="unknownbird" className='cardImage' />
         <Typography variant="h5" component="h5" className="name">
-          {birdData.en}
+          {selectedBird.species}
         </Typography>
         <Typography variant="h6" component="h6" className="latinName">
           {selectedBird.species}

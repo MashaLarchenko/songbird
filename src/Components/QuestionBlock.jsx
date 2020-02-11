@@ -30,7 +30,6 @@ const useStyle = makeStyles(() => ({
 }));
 
 export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered }) {
-  console.log(rightAnswer.image);
   const classes = useStyle();
   return (
     <Container>
