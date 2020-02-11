@@ -9,7 +9,8 @@ function Header({ score, level }) {
       color: 'red',
     },
     container: {
-      marginBottom: '2%',
+      paddingTop: '10px',
+      paddingBottom: '10px',
     },
   };
 
@@ -18,7 +19,7 @@ function Header({ score, level }) {
       <header>
         <nav className="top-header">
           <img src="src/assets/logo.svg" alt="logo" className="header-logo" />
-          <p className="total_score">
+          <p className="totalScore">
             Score:
             <span className="score_number">{score.score}</span>
           </p>

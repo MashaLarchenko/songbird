@@ -13,13 +13,13 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image }) {
+function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image, loading}) {
   const styles = useStyle();
   const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
   return (
     <Card className={styles.sectionWrapper}>
       {startQ ? (
-       <DescriptionContent image={image} selectedBird={selectedBird} birdData={birdData}/>
+       <DescriptionContent image={image} selectedBird={selectedBird} birdData={birdData} loading={loading} />
       ) : (
         'no data'
       )}

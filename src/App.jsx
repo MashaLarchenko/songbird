@@ -8,6 +8,8 @@ import BirdList from './Components/BirdList';
 import BirdDescription from './Components/BirdDescription';
 // import Context from './context';
 import birdState from './Components/birdState';
+import LastPage from './Components/LastPage';
+import getRightAndwerData from './Components/rightAnswer';
 
 const style = {
   questContainer: {
@@ -21,7 +23,6 @@ const style = {
 const NextButton = withStyles({
   root: {
     width: '100%',
-    margin: '25px 15px',
     backgroundColor: 'rgba(48,48,48, .9)',
     border: '1px solid #444',
     color: '#fff',
@@ -57,6 +58,7 @@ export default function App() {
       noRightAnswer: true,
       isAnswered: false,
       startQ: false,
+      isFinished: false,
     },
   });
   // const [image, setImage] = useState('src/assets/unknownbird.jpg');
@@ -74,9 +76,11 @@ export default function App() {
   });
   const [levelCount, setLevel] = useState(0);
 
+  const [loading, setLoading] = useState(false);
+
   const getBirdData = async query => {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}+q:C+len:10-15&since=100`;
+    const targetUrl = `https://www.xeno-canto.org/api/2/recordings?query=${query}+q:A+len_lt:50&since=2015-01-01`;
     const resp = await fetch(proxyUrl + targetUrl);
     const data = await resp.json();
     return data;
@@ -150,6 +154,7 @@ export default function App() {
   useEffect(() => {
     const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
     const answerBird = birdState[0][levelCount][random - 1];
+    console.log(birdState[0], levelCount, answerBird);
     Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)]).then(
       values => {
         const [data, imgSrc] = values;
@@ -173,11 +178,9 @@ export default function App() {
         });
       }
     );
-    console.log('level');
-    console.log(rightAnswer);
   }, [levelCount]);
 
-  return (
+  return !birdData.status.isFinished ? (
     <>
       <Header score={score} level={levelCount} />
       <QuestionBlock
@@ -185,7 +188,7 @@ export default function App() {
         isAnswerState={birdData.status.noRightAnswer}
         isAnswered={birdData.status.isAnswered}
       />
-      <Container style={style.questContainer}>
+      <Container className="questContainer">
         <BirdList
           levelCount={levelCount}
           setData={setData}
@@ -198,12 +201,23 @@ export default function App() {
           startQ={birdData.status.startQ}
           image={birdData.image}
           birdData={birdData.data}
+          loading={loading}
         />
       </Container>
       <NextButton
         variant="outlined"
         onClick={() => {
-          setLevel(levelCount + 1);
+          levelCount < 5
+            ? setLevel(levelCount + 1)
+            : levelCount === 5
+            ? setData({
+                ...birdData,
+                status: {
+                  ...birdData.status,
+                  isFinished: true,
+                },
+              })
+            : setLevel(0);
           setScore({
             ...score,
             try: 0,
@@ -214,5 +228,7 @@ export default function App() {
         Next level
       </NextButton>
     </>
+  ) : (
+    <LastPage score={score} levelCount={levelCount} setData={setData} birdData={birdData} setScore={setScore}/>
   );
 }

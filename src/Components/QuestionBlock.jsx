@@ -13,7 +13,7 @@ const useStyle = makeStyles(() => ({
   container: {
     display: 'grid',
     gridTemplateColumns: '1fr 3fr',
-    padding: '2%',
+    padding: '0 2%',
     backgroundColor: 'rgba(48,48,48, .9)',
   },
   audio: {
@@ -23,25 +23,30 @@ const useStyle = makeStyles(() => ({
     color: 'white',
   },
   image: {
-    width: '100%',
+    width: '200px',
+    height: '170px',
     borderRadius: '5px',
   },
 }));
 
 export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered }) {
-    console.log(rightAnswer.image);
+  console.log(rightAnswer.image);
   const classes = useStyle();
   return (
     <Container>
       <Card className={classes.container}>
         <CardContent>
-            <img src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image} alt="unknownbird" className={classes.image} />
+          <img
+            src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image}
+            alt="unknownbird"
+            className={classes.image}
+          />
         </CardContent>
         <div className={classes.audio}>
           <Typography variant="h5" component="h5" className={classes.typog}>
-            {isAnswerState ? rightAnswer.cryptTitle : rightAnswer.name}
+            {isAnswerState && !isAnswered ? rightAnswer.cryptTitle : rightAnswer.name}
           </Typography>
-          <Player link={rightAnswer.audio} play={false}/>
+          <Player link={rightAnswer.audio} play={false} />
         </div>
       </Card>
     </Container>

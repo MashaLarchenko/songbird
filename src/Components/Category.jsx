@@ -21,19 +21,8 @@ export default function Category({ level }) {
       <ul className="bird-family-container">
         {questionCategory.map((item, index) => {
             console.log(level, index);
-          if (index === level) {
-              return <li className="bird-family-item traning active-item">{item}</li>;
-          } else {
-            return <li className="bird-family-item traning">{item}</li>;
-          }
+            return <li className={index === level? "bird-family-item active-item" : "bird-family-item"} key={index}>{item}</li>;
         })}
-
-        {/* <li className="bird-family-item traning active-item ">Разминка</li>
-        <li className="bird-family-item insectivores">Насекомоядные птицы</li>
-        <li className="bird-family-item predatory">Хищные птицы</li>
-        <li className="bird-family-item song">Луговые птицы</li>
-        <li className="bird-family-item forest">Лесные птицы</li>
-        <li className="bird-family-item coastal">Водно-болотные птицы</li> */}
       </ul>
     </section>
   );

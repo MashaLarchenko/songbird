@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Player from './AudioPlayer';
 
 
-export default function DescriptionContent({image, birdData, selectedBird}) {
+export default function DescriptionContent({image, birdData, selectedBird, loading}) {
   return (
     <CardContent>
       <div className="cardHeader">
@@ -20,7 +20,7 @@ export default function DescriptionContent({image, birdData, selectedBird}) {
         Location
                   {birdData.loc}
       </Typography> */}
-      <Player link={birdData.file} play={false} />
+     {loading ?  'Loading...' : <Player link={birdData.file} play={false} />}
       <p className="description">{selectedBird.description}</p>
     </CardContent>
   );
