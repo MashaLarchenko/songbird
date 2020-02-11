@@ -20,34 +20,34 @@ const style = {
   },
 };
 
-const NextButton = withStyles({
-  root: {
-    width: '100%',
-    backgroundColor: 'rgba(48,48,48, .9)',
-    border: '1px solid #444',
-    color: '#fff',
-    cursor: 'auto',
-    transition: '.3s',
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 16,
-    padding: '6px 12px',
-    lineHeight: 1.5,
-    '&:hover': {
-      backgroundColor: '#0069d9',
-      borderColor: '#0062cc',
-      boxShadow: 'none',
-    },
-    '&:active': {
-      boxShadow: 'none',
-      backgroundColor: '#0062cc',
-      borderColor: '#005cbf',
-    },
-    '&:focus': {
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    },
-  },
-})(Button);
+// const NextButton = withStyles({
+//   root: {
+//     width: '100%',
+//     backgroundColor: 'rgba(48,48,48, .9)',
+//     border: '1px solid #444',
+//     color: '#fff',
+//     cursor: 'auto',
+//     transition: '.3s',
+//     boxShadow: 'none',
+//     textTransform: 'none',
+//     fontSize: 16,
+//     padding: '6px 12px',
+//     lineHeight: 1.5,
+//     '&:hover': {
+//       backgroundColor: '#0069d9',
+//       borderColor: '#0062cc',
+//       boxShadow: 'none',
+//     },
+//     '&:active': {
+//       boxShadow: 'none',
+//       backgroundColor: '#0062cc',
+//       borderColor: '#005cbf',
+//     },
+//     '&:focus': {
+//       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+//     },
+//   },
+// })(Button);
 
 export default function App() {
   const [birdData, setData] = useState({
@@ -74,7 +74,7 @@ export default function App() {
     image: '',
     audio: '',
   });
-  const [levelCount, setLevel] = useState(0);
+  const [levelCount, setLevel] = useState(5);
 
   const [loading, setLoading] = useState(false);
 
@@ -204,8 +204,9 @@ export default function App() {
           loading={loading}
         />
       </Container>
-      <NextButton
+      <Button
         variant="outlined"
+        className="nextButton"
         onClick={() => {
           levelCount < 5
             ? setLevel(levelCount + 1)
@@ -226,7 +227,7 @@ export default function App() {
         disabled={birdData.status.noRightAnswer && !birdData.status.isAnswered}
       >
         Next level
-      </NextButton>
+      </Button>
     </>
   ) : (
     <LastPage score={score} levelCount={levelCount} setData={setData} birdData={birdData} setScore={setScore}/>

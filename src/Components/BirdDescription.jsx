@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 // import Context from '../context';
 import DescriptionContent from './DescriptionContent';
+import DefaultText from './DefaultText';
 import birdState from './birdState';
 
 const useStyle = makeStyles(() => ({
@@ -21,7 +22,7 @@ function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image, 
       {startQ ? (
        <DescriptionContent image={image} selectedBird={selectedBird} birdData={birdData} loading={loading} />
       ) : (
-        'no data'
+        <DefaultText />
       )}
     </Card>
   );

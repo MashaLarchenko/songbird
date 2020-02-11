@@ -1,7 +1,8 @@
 import React from 'react';
+import { Container, Button } from '@material-ui/core';
+
+import Card from '@material-ui/core/Card';
 import Header from './Header';
-import { Container } from '@material-ui/core';
-import { Button } from '@material-ui/core';
 
 export default function LastPage({ score, levelCount, setData, birdData, setScore }) {
   console.log(score, 'last');
@@ -22,13 +23,15 @@ export default function LastPage({ score, levelCount, setData, birdData, setScor
     <>
       <Header score={score} level={levelCount} />
       <Container>
-        <h2> Поздравляю!</h2>
-        <p>
-          Бы набрали
-          {score.score}
-          из 30
-        </p>
-        <Button onClick={tryClickHandler}>Попробовать снова</Button>
+        <Card className="congratCard">
+          <h2> Поздравляю!</h2>
+          <p>
+            Бы набрали
+            {score.score}
+            из 30
+          </p>
+          <Button onClick={tryClickHandler} >Попробовать снова</Button>
+        </Card>
       </Container>
     </>
   );
