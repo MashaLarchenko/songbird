@@ -4,13 +4,17 @@ import { Container, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import Header from './Header';
 
-export default function LastPage({ score, levelCount, setData, birdData, setScore }) {
+export default function LastPage({ score, levelCount, setData, birdData, setScore, setLevel }) {
   console.log(score, 'last');
   const tryClickHandler = () => {
     setData({
-      ...birdData,
+      data: 'no data',
+      image: 'src/assets/unknownbird.jpg',
+      song: ' ',
       status: {
-        ...birdData.status,
+        noRightAnswer: true,
+        isAnswered: false,
+        startQ: false,
         isFinished: false,
       },
     });
@@ -18,6 +22,7 @@ export default function LastPage({ score, levelCount, setData, birdData, setScor
       score: 0,
       try: 0,
     });
+    setLevel(0);
   };
   return (
     <>
@@ -30,7 +35,7 @@ export default function LastPage({ score, levelCount, setData, birdData, setScor
             {score.score}
             из 30
           </p>
-          <Button onClick={tryClickHandler} >Попробовать снова</Button>
+          <Button onClick={tryClickHandler}>Попробовать снова</Button>
         </Card>
       </Container>
     </>

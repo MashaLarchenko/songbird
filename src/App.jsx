@@ -20,35 +20,6 @@ const style = {
   },
 };
 
-// const NextButton = withStyles({
-//   root: {
-//     width: '100%',
-//     backgroundColor: 'rgba(48,48,48, .9)',
-//     border: '1px solid #444',
-//     color: '#fff',
-//     cursor: 'auto',
-//     transition: '.3s',
-//     boxShadow: 'none',
-//     textTransform: 'none',
-//     fontSize: 16,
-//     padding: '6px 12px',
-//     lineHeight: 1.5,
-//     '&:hover': {
-//       backgroundColor: '#0069d9',
-//       borderColor: '#0062cc',
-//       boxShadow: 'none',
-//     },
-//     '&:active': {
-//       boxShadow: 'none',
-//       backgroundColor: '#0062cc',
-//       borderColor: '#005cbf',
-//     },
-//     '&:focus': {
-//       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-//     },
-//   },
-// })(Button);
-
 export default function App() {
   const [birdData, setData] = useState({
     data: 'no data',
@@ -230,6 +201,6 @@ export default function App() {
       </Button>
     </>
   ) : (
-    <LastPage score={score} levelCount={levelCount} setData={setData} birdData={birdData} setScore={setScore}/>
+    <LastPage score={score} levelCount={levelCount} setData={setData} birdData={birdData} setScore={setScore} setLevel={setLevel} />
   );
 }
