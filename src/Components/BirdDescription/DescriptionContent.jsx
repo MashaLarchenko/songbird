@@ -1,7 +1,7 @@
 import React from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Player from './AudioPlayer';
+import Player from '../Player/AudioPlayer';
 
 
 export default function DescriptionContent({image, birdData, selectedBird, loading}) {

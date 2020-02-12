@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import Header from './Components/Header';
-import QuestionBlock from './Components/QuestionBlock';
-import BirdList from './Components/BirdList';
-import BirdDescription from './Components/BirdDescription';
+import Header from './Components/Header/Header';
+import QuestionBlock from './Components/QuestionBlock/QuestionBlock';
+import BirdList from './Components/BirdList/BirdList';
+import BirdDescription from './Components/BirdDescription/BirdDescription';
 // import Context from './context';
 import birdState from './Components/birdState';
 import LastPage from './Components/LastPage';
 import getRightAndwerData from './Components/rightAnswer';
-import Player from './Components/AudioPlayer';
+import Player from './Components/Player/AudioPlayer';
 
 const style = {
   questContainer: {
@@ -47,6 +47,7 @@ export default function App() {
   const [levelCount, setLevel] = useState(0);
   const [loading, setLoading] = useState(false);
   const [clickSong, setSong] = useState('');
+  const [levelStart, setStart] = useState(false);
 
   useEffect(() => {
     setData({
@@ -71,6 +72,7 @@ export default function App() {
           cryptTitle: '*****',
           cryptImage: 'src/assets/unknownbird.jpg',
         });
+        setStart(true);
       }
     );
   }, [levelCount]);
@@ -134,7 +136,7 @@ export default function App() {
       });
       setSong('src/assets/correct-answer.mp3');
     } else {
-      answerBird.status[1] = 'wrongAnswer';
+      birdData.status.isAnswered ? null : (answerBird.status[1] = 'wrongAnswer');
       setData({
         ...birdData,
         status: {
@@ -153,6 +155,38 @@ export default function App() {
     }
   };
 
+  const nextButtonClickHandler = () => {
+    levelCount < 5
+      ? (setLevel(levelCount + 1),
+        setData({
+          ...birdData,
+          status: {
+            ...birdData.status,
+            startQ: false,
+          },
+        }))
+      : levelCount === 5
+      ? (setData({
+          ...birdData,
+          status: {
+            ...birdData.status,
+            isFinished: true,
+            startQ: false,
+          },
+        }),
+        birdState[0].map((level, index) => {
+          level.map((item, itemI) => {
+            item.status[1] = 'check-btn';
+          });
+        }))
+      : setLevel(0);
+
+    setScore({
+      ...score,
+      try: 0,
+    });
+  };
+
   return !birdData.status.isFinished ? (
     <>
       <Header score={score} level={levelCount} />
@@ -160,6 +194,7 @@ export default function App() {
         rightAnswer={rightAnswer}
         isAnswerState={birdData.status.noRightAnswer}
         isAnswered={birdData.status.isAnswered}
+        levelStart={levelStart}
       />
       <Container className="questContainer">
         <BirdList
@@ -177,40 +212,18 @@ export default function App() {
           loading={loading}
         />
         {birdData.status.startQ ? <Player link={clickSong} play style="listItemAudio" /> : null}
-      </Container>
-      <Button
+        <Button
         variant="outlined"
         className="nextButton"
-        onClick={() => {
-          levelCount < 5
-            ? setLevel(levelCount + 1)
-            : levelCount === 5
-            ? setData({
-                ...birdData,
-                status: {
-                  ...birdData.status,
-                  isFinished: true,
-                  startQ: false,
-                },
-              })
-            : setLevel(0);
-          setScore({
-            ...score,
-            try: 0,
-          });
-          setData({
-            ...birdData,
-            status: {
-              ...birdData.status,
-              startQ: false,
-            },
-          });
-        }}
+        onClick={nextButtonClickHandler}
         disabled={birdData.status.noRightAnswer && !birdData.status.isAnswered}
       >
         Next level
       </Button>
-    </>
+
+      </Container>
+          </>
+
   ) : (
     <LastPage
       score={score}

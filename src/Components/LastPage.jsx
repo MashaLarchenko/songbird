@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Button } from '@material-ui/core';
 
 import Card from '@material-ui/core/Card';
-import Header from './Header';
+import Header from './Header/Header';
 
 export default function LastPage({ score, levelCount, setData, birdData, setScore, setLevel }) {
   console.log(score, 'last');

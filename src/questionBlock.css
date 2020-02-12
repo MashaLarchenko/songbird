@@ -1,7 +1,0 @@
-@media screen and (max-width: 800px) {
-  .questContainer {
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: 1fr;
-    grid-row-gap: 10px;
-  }
-}

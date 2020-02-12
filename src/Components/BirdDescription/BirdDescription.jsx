@@ -5,8 +5,8 @@ import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 // import Context from '../context';
 import DescriptionContent from './DescriptionContent';
-import DefaultText from './DefaultText';
-import birdState from './birdState';
+import DefaultText from '../DefaultText';
+import birdState from '../birdState';
 
 const useStyle = makeStyles(() => ({
   sectionWrapper: {

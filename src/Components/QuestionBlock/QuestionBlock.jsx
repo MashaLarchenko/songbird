@@ -3,49 +3,40 @@ import React from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+// import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Player from './AudioPlayer';
+import Player from '../Player/AudioPlayer';
+import '../image.css';
+import '../audio.css';
+import './questionBlock.css';
+
 // import Context from '../context';
 // import birdState from './birdState';
 
 const useStyle = makeStyles(() => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: '1fr 3fr',
-    padding: '0 2%',
+    padding: '2%',
     backgroundColor: 'rgba(48,48,48, .9)',
-  },
-  audio: {
-    paddingTop: '5%',
-  },
-  typog: {
-    color: 'white',
-  },
-  image: {
-    width: '200px',
-    height: '170px',
-    borderRadius: '5px',
   },
 }));
 
-export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered }) {
+export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered, levelStart }) {
   const classes = useStyle();
+  const styles = [classes.container, 'headerContainer'];
   return (
     <Container>
-      <Card className={classes.container}>
-        <CardContent>
+      <Card className={styles.join(' ')} >
           <img
             src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image}
             alt="unknownbird"
-            className={classes.image}
+            className="headerImg"
           />
-        </CardContent>
-        <div className={classes.audio}>
-          <Typography variant="h5" component="h5" className={classes.typog}>
+          <p variant="h5" component="h5" className='questionTitle'>
             {isAnswerState && !isAnswered ? rightAnswer.cryptTitle : rightAnswer.name}
-          </Typography>
-          <Player link={rightAnswer.audio} play={false} />
+          </p>
+        <div className="headerAudio">
+          {!levelStart ? 'Loading...' : <Player link={rightAnswer.audio} play={false} />}
         </div>
       </Card>
     </Container>

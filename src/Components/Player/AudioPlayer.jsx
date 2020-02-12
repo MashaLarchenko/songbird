@@ -5,7 +5,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import PropTypes from 'prop-types';
 
 function Player({ link, play, style }) {
-    return <AudioPlayer src={link} autoplay={play} onPlay={() => console.log('onPlay')} className={style}/>;
+    return <AudioPlayer src={link} autoplay={play} onPlay={() => console.log('onPlay')} className={style} autoPlayAfterSrcChange={false}/>;
 }
 Player.propTypes = {
     link: PropTypes.string,

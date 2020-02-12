@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 // import Context from '../context';
 import PropTypes from 'prop-types';
 import BirdItem from './BirdItem';
-import birdState from './birdState';
+import birdState from '../birdState';
 
 const useStyle = makeStyles(() => ({
   sectionWrapper: {
