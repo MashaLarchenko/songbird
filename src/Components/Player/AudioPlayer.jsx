@@ -3,12 +3,8 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import PropTypes from 'prop-types';
 
-function Player({ link, play, style }) {
-  console.log(play);
-
-  return (
-    <AudioPlayer src={link} className={style} autoPlayAfterSrcChange={false} showJumpControls={false} autoplay={play} />
-  );
+function Player({ link, play}) {
+  return <AudioPlayer src={link} autoplay={play} autoPlayAfterSrcChange={false} />;
 }
 
 Player.propTypes = {

@@ -1,9 +1,7 @@
-/* eslint-disable react/require-default-props */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
-// import Context from '../context';
 import DescriptionContent from './DescriptionContent';
 import DefaultText from '../DefaultText';
 import birdState from '../birdState';
@@ -34,5 +32,9 @@ BirdDescription.propTypes = {
   selectedBirdId: PropTypes.number,
   startQ: PropTypes.bool.isRequired,
 };
+
+BirdDescription.defaultProps = { 
+  selectedBirdId: 0,
+}
 
 export default BirdDescription;

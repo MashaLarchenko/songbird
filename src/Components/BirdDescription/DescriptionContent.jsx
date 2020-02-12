@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Player from '../Player/AudioPlayer';
@@ -22,4 +23,8 @@ export default function DescriptionContent({image, birdData, selectedBird, loadi
       <p className="description">{selectedBird.description}</p>
     </CardContent>
   );
+}
+
+DescriptionContent.propTypes = {
+  image: PropTypes.string.isRequired,
 }

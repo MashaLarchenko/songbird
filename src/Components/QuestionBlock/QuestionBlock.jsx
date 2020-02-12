@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Player from '../Player/AudioPlayer';
@@ -18,7 +18,7 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered, levelStart }) {
+function QuestionBlock({ rightAnswer, isAnswerState, isAnswered, levelStart }) {
   const classes = useStyle();
   const styles = [classes.container, 'headerContainer'];
   return (
@@ -39,3 +39,19 @@ export default function QuestionBlock({ rightAnswer, isAnswerState, isAnswered, 
     </Container>
   );
 }
+
+QuestionBlock.propTypes = {
+  rightAnswer: PropTypes.shape({
+    id: PropTypes.number,
+    cryptTitle: PropTypes.string,
+    title: PropTypes.string,
+    cryptImage: PropTypes.string,
+    image: PropTypes.string,
+    audio:PropTypes.string,
+  }).isRequired,
+  isAnswerState: PropTypes.bool.isRequired,
+  isAnswered: PropTypes.bool.isRequired,
+  levelStart: PropTypes.bool.isRequired,
+};
+
+export default QuestionBlock;

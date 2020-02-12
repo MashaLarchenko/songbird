@@ -2,9 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
-// import Player from './AudioPlayer';
-
-// import Context from '../context';
 
 const useStyle = makeStyles(() => ({
   typog: {
@@ -25,7 +22,6 @@ function BirdItem({ name, species, id, clickHandler, classes, birdData }) {
       >
         {name}
       </button>
-      {/* <Player link={birdData.song} play={true} style={'listItemAudio'}/> */}
     </ListItem>
   );
 }
@@ -33,10 +29,6 @@ function BirdItem({ name, species, id, clickHandler, classes, birdData }) {
 BirdItem.propTypes = {
   name: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
-  // setImage: PropTypes.func.isRequired,
-  // setData: PropTypes.func.isRequired,
-  // setAnswerState: PropTypes.func.isRequired,
-  // isAnswerState: PropTypes.objectOf(PropTypes.bool).isRequired,
   id: PropTypes.number.isRequired,
   clickHandler: PropTypes.func.isRequired,
   classes: PropTypes.arrayOf(PropTypes.string).isRequired,

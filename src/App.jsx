@@ -42,9 +42,8 @@ export default function App() {
     image: '',
     audio: '',
   });
-  const [levelCount, setLevel] = useState(5);
+  const [levelCount, setLevel] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [clickSong, setSong] = useState('');
   const [levelStart, setStart] = useState(false);
 
   useEffect(() => {
@@ -132,7 +131,6 @@ export default function App() {
           startQ: true,
         },
       });
-      setSong('src/assets/correct-answer.mp3');
     } else {
       birdData.status.isAnswered ? null : (answerBird.status[1] = 'wrongAnswer');
       setData({
@@ -145,7 +143,6 @@ export default function App() {
           startQ: true,
         },
       });
-      setSong('src/assets/wrong-answer.mp3');
       setScore({
         ...score,
         try: score.try + 1,
@@ -209,7 +206,6 @@ export default function App() {
           birdData={data}
           loading={loading}
         />
-        {birdData.status.startQ ? (<Player link={clickSong} play={true} style="listItemAudio" level={levelCount} />, console.log('answer')): null}
         <Button
           variant="outlined"
           className="button"
@@ -225,7 +221,6 @@ export default function App() {
       score={score}
       levelCount={levelCount}
       setData={setData}
-      birdData={data}
       setScore={setScore}
       setLevel={setLevel}
     />
