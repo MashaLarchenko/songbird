@@ -2,3 +2,11 @@
     grid-column: 2;
     grid-row: 2;
 }
+
+.rhap_container {
+    border-radius: 10px;
+}
+
+.rhap_download-progress, .rhap_progress-bar-show-download {
+    background-color: rgb(16,90,71);
+}

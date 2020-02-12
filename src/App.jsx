@@ -42,7 +42,7 @@ export default function App() {
     image: '',
     audio: '',
   });
-  const [levelCount, setLevel] = useState(0);
+  const [levelCount, setLevel] = useState(5);
   const [loading, setLoading] = useState(false);
   const [clickSong, setSong] = useState('');
   const [levelStart, setStart] = useState(false);
