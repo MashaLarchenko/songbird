@@ -30,7 +30,7 @@ function LastPage({ score, levelCount, setData, setScore, setLevel }) {
         <Card className="congratCard">
           <h2> Поздравляю!</h2>
           <img
-            src='src/assets/juniorLevel.jpg'
+            src='src/assets/seniorLevel.jpg'
             className="lastPageImg"
           />
           <p> Bы набрали {score.score} баллов из 30</p>
