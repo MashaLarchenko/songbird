@@ -16,7 +16,7 @@ function BirdItem({ name, species, id, clickHandler, classes, birdData }) {
       <button
         type="button"
         className={classes.join(' ')}
-        onClick={(e) => {
+        onClick={e => {
           clickHandler(species, id, e);
         }}
       >

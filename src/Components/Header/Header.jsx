@@ -15,7 +15,7 @@ function Header({ score, level }) {
   };
 
   return (
-    <Container style={style.container} >
+    <Container style={style.container}>
       <header>
         <nav className="top-header">
           <img src="src/assets/logo.svg" alt="logo" className="header-logo" />

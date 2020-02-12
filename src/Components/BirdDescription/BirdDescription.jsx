@@ -12,14 +12,19 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image, loading}) {
+function BirdDescription({ levelCount, selectedBirdId, startQ, birdData, image, loading }) {
   const styles = useStyle();
   const classes = [styles.sectionWrapper, 'birdDescriptionSection'];
   const selectedBird = birdState[0][levelCount][selectedBirdId - 1];
   return (
     <Card className={classes.join(' ')}>
       {startQ ? (
-       <DescriptionContent image={image} selectedBird={selectedBird} birdData={birdData} loading={loading} />
+        <DescriptionContent
+          image={image}
+          selectedBird={selectedBird}
+          birdData={birdData}
+          loading={loading}
+        />
       ) : (
         <DefaultText />
       )}
@@ -33,8 +38,8 @@ BirdDescription.propTypes = {
   startQ: PropTypes.bool.isRequired,
 };
 
-BirdDescription.defaultProps = { 
+BirdDescription.defaultProps = {
   selectedBirdId: 0,
-}
+};
 
 export default BirdDescription;

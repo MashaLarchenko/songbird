@@ -11,9 +11,9 @@ const useStyle = makeStyles(() => ({
   sectionWrapper: {
     backgroundColor: 'rgba(48,48,48, .9)',
   },
-  root:{
-    padding: '10px',  
-  }
+  root: {
+    padding: '10px',
+  },
 }));
 
 function BirdList({ levelCount, clickHandler, birdData }) {

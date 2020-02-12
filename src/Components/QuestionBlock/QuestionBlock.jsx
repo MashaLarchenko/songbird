@@ -23,17 +23,17 @@ function QuestionBlock({ rightAnswer, isAnswerState, isAnswered, levelStart }) {
   const styles = [classes.container, 'headerContainer'];
   return (
     <Container>
-      <Card className={styles.join(' ')} >
-          <img
-            src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image}
-            alt="unknownbird"
-            className="headerImg"
-          />
-          <p variant="h5" component="h5" className='questionTitle'>
-            {isAnswerState && !isAnswered ? rightAnswer.cryptTitle : rightAnswer.name}
-          </p>
+      <Card className={styles.join(' ')}>
+        <img
+          src={isAnswerState && !isAnswered ? rightAnswer.cryptImage : rightAnswer.image}
+          alt="unknownbird"
+          className="headerImg"
+        />
+        <p variant="h5" component="h5" className="questionTitle">
+          {isAnswerState && !isAnswered ? rightAnswer.cryptTitle : rightAnswer.name}
+        </p>
         <div className="headerAudio">
-          {!levelStart ? <Loading/> : <Player link={rightAnswer.audio} play={false} />}
+          {!levelStart ? <Loading /> : <Player link={rightAnswer.audio} play={false} />}
         </div>
       </Card>
     </Container>
@@ -47,7 +47,7 @@ QuestionBlock.propTypes = {
     title: PropTypes.string,
     cryptImage: PropTypes.string,
     image: PropTypes.string,
-    audio:PropTypes.string,
+    audio: PropTypes.string,
   }).isRequired,
   isAnswerState: PropTypes.bool.isRequired,
   isAnswered: PropTypes.bool.isRequired,

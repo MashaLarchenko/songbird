@@ -5,13 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import Player from '../Player/AudioPlayer';
 import Loading from '../Loading';
 
-
-
-export default function DescriptionContent({image, birdData, selectedBird, loading}) {
+export default function DescriptionContent({ image, birdData, selectedBird, loading }) {
   return (
     <CardContent>
       <div className="cardHeader">
-        <img src={image} alt="unknownbird" className='cardImage' />
+        <img src={image} alt="unknownbird" className="cardImage" />
         <Typography variant="h5" component="h5" className="name">
           {birdData.en}
         </Typography>
@@ -19,7 +17,7 @@ export default function DescriptionContent({image, birdData, selectedBird, loadi
           {selectedBird.species}
         </Typography>
       </div>
-     {loading ? <Loading/> : <Player link={birdData.file} play={false} />}
+      {loading ? <Loading /> : <Player link={birdData.file} play={false} />}
       <p className="description">{selectedBird.description}</p>
     </CardContent>
   );
@@ -27,4 +25,4 @@ export default function DescriptionContent({image, birdData, selectedBird, loadi
 
 DescriptionContent.propTypes = {
   image: PropTypes.string.isRequired,
-}
+};
