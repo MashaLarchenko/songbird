@@ -28,7 +28,7 @@ export default function App() {
       isFinished: false,
     },
   });
-  const [image, setImage] = useState('src/assets/unknownbird.jpg');
+  const [image, setImage] = useState('public/assets/unknownbird.jpg');
   const [data, setBirdData] = useState('');
   const [score, setScore] = useState({
     score: 0,
@@ -38,7 +38,7 @@ export default function App() {
     id: Math.floor(Math.random() * (6 - 1 + 1)) + 1,
     cryptTitle: '*****',
     title: '',
-    cryptImage: 'src/assets/unknownbird.jpg',
+    cryptImage: 'public/assets/unknownbird.jpg',
     image: '',
     audio: '',
   });
@@ -67,7 +67,7 @@ export default function App() {
           image: `https://farm${imgSrc.farm}.staticflickr.com/${imgSrc.server}/${imgSrc.id}_${imgSrc.secret}.jpg`,
           audio: data.recordings[0].file,
           cryptTitle: '*****',
-          cryptImage: 'src/assets/unknownbird.jpg',
+          cryptImage: 'public/assets/unknownbird.jpg',
         });
         setStart(true);
       }

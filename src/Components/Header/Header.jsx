@@ -18,7 +18,7 @@ function Header({ score, level }) {
     <Container style={style.container}>
       <header>
         <nav className="top-header">
-          <img src="src/assets/logo.svg" alt="logo" className="header-logo" />
+          <img src="public/assets/logo.svg" alt="logo" className="header-logo" />
           <p className="totalScore">
             Score:
             <span className="score_number">{score.score}</span>
