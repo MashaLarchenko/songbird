@@ -31,7 +31,7 @@ export default function App() {
     },
   });
   const [image, setImage] = useState('src/assets/unknownbird.jpg');
-  const [data, setBirdData] = useState('src/assets/unknownbird.jpg');
+  const [data, setBirdData] = useState('');
   const [score, setScore] = useState({
     score: 0,
     try: 0,
@@ -46,17 +46,17 @@ export default function App() {
   });
   const [levelCount, setLevel] = useState(0);
   const [loading, setLoading] = useState(false);
-  //   const [clickSong, setSong] = useState('');
+  const [clickSong, setSong] = useState('');
 
   useEffect(() => {
     setData({
-        ...birdData,
-        status: {
-          ...birdData.status,
-          noRightAnswer: true,
-          isAnswered: false,
-        },
-      });
+      ...birdData,
+      status: {
+        ...birdData.status,
+        noRightAnswer: true,
+        isAnswered: false,
+      },
+    });
     const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
     const answerBird = birdState[0][levelCount][random - 1];
     Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)]).then(
@@ -84,21 +84,16 @@ export default function App() {
   };
 
   const getBirdImage = async query => {
+    const API_KEY = 'd1d5151746b40e69e612092dc0de65bf';
     const resp = await fetch(
-      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d1d5151746b40e69e612092dc0de65bf&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`
+      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&tagmode=all&extras=urlm&format=json&nojsoncallback=1&tags=${query}`
     );
     const data = await resp.json();
     return data.photos.photo[0];
   };
 
-  const clickHandler = (species, id) => {
-    // setData({
-    //   ...birdData,
-    //   status: {
-    //     ...birdData.status,
-    //     startQ: true,
-    //   },
-    // });
+  const clickHandler = (species, id, e) => {
+      e.preventDefault();
     const answerBird = birdState[0][levelCount][id - 1];
     setLoading(true);
     getBirdData(species).then(data => {
@@ -130,16 +125,8 @@ export default function App() {
           birdId: id,
           startQ: true,
         },
-        // song: 'src/assets/correct-answer.mp3',
       });
-      //   setSong('src/assets/correct-answer.mp3');
-
-      // setRightAnswer({
-      //   ...rightAnswer,
-      //   name: `${answerBird.name}(${answerBird.species})`,
-      //   audio: data.recordings[0].file,
-      //   image: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-      // });
+      setSong('src/assets/correct-answer.mp3');
       setScore({
         score: score.score + (5 - score.try),
         try: score.try + 1,
@@ -155,9 +142,8 @@ export default function App() {
           birdId: id,
           startQ: true,
         },
-        // song: 'src/assets/wrong-answer.mp3',
       });
-      //   setSong('src/assets/wrong-answer.mp3');
+      setSong('src/assets/wrong-answer.mp3');
       setScore({
         ...score,
         try: score.try + 1,
@@ -188,7 +174,7 @@ export default function App() {
           birdData={data}
           loading={loading}
         />
-        {/* {birdData.status.startQ ? <Player link={clickSong} play={true} style={'listItemAudio'} /> : null} */}
+        {birdData.status.startQ ? <Player link={clickSong} play={true} style="listItemAudio" /> : null}
       </Container>
       <Button
         variant="outlined"
