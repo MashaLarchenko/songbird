@@ -58,9 +58,9 @@ export default function App() {
     const random = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
     const answerBird = birdState[0][levelCount][random - 1];
     setRightAnswer({
-        ...rightAnswer,
-        title: answerBird.species,
-      });
+      ...rightAnswer,
+      title: answerBird.species,
+    });
     Promise.all([getBirdData(answerBird.species), getBirdImage(answerBird.species)]).then(
       values => {
         const [data, imgSrc] = values;
