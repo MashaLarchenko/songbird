@@ -30,12 +30,10 @@ export default function LastPage({ score, levelCount, setData, birdData, setScor
       <Container>
         <Card className="congratCard">
           <h2> Поздравляю!</h2>
-          <p>
-            Бы набрали
-            {score.score}
-            из 30
+          <img src={score < 10 ? 'src/assets/juniorLevel.jpg' : score < 20 ? 'src/assets/midLevel.jpg' : 'src/assets/seniorLevel.jpg' } className='lastPageImg'></img>
+          <p> Bы набрали {score.score} баллов из 30
           </p>
-          <Button onClick={tryClickHandler}>Попробовать снова</Button>
+          <Button onClick={tryClickHandler} className='button'>Попробовать снова</Button>
         </Card>
       </Container>
     </>

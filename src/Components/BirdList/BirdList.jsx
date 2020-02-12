@@ -19,9 +19,10 @@ const useStyle = makeStyles(() => ({
 
 function BirdList({ levelCount, clickHandler, birdData }) {
   const styles = useStyle();
+  const classes = [styles.sectionWrapper, 'birdListSection'];
   const birdList = birdState[0][levelCount];
   return (
-    <Card className={styles.sectionWrapper}>
+    <Card className={classes.join(' ')}>
       <CardContent className={styles.root}>
         <List>
           {birdList.map(bird => (

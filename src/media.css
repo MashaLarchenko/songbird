@@ -1,8 +1,27 @@
+@media screen and (max-width: 1060px) {
+  .cardImage {
+    width: 165px;
+height: 155px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .questContainer {
-    grid-template-rows: repeat(2, max-content);
+    grid-template-rows: max-content 1fr max-content;
     grid-template-columns: 1fr;
     grid-row-gap: 10px;
+  }
+
+  .birdListSection {
+    grid-row: 1;
+  }
+
+  .birdDescriptionSection {
+    grid-row: 2;
+  }
+
+  .nextButton {
+    grid-row: 3;
   }
 
   .cardImage {
@@ -34,6 +53,8 @@
 }
 @media screen and (max-width: 480px) {
   .cardImage {
+    display: flex;
+    justify-self: center;
     width: 130px;
     height: 120px;
   }
@@ -44,5 +65,14 @@
 
   .totalScore {
     font-size: 1.2rem;
+  }
+
+  .cardHeader {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'image'
+      'name'
+      'latinName';
+    grid-row-gap: 10px;
   }
 }

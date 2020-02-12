@@ -6,10 +6,8 @@ import Header from './Components/Header/Header';
 import QuestionBlock from './Components/QuestionBlock/QuestionBlock';
 import BirdList from './Components/BirdList/BirdList';
 import BirdDescription from './Components/BirdDescription/BirdDescription';
-// import Context from './context';
 import birdState from './Components/birdState';
 import LastPage from './Components/LastPage';
-import getRightAndwerData from './Components/rightAnswer';
 import Player from './Components/Player/AudioPlayer';
 
 const style = {
@@ -211,19 +209,17 @@ export default function App() {
           birdData={data}
           loading={loading}
         />
-        {birdData.status.startQ ? <Player link={clickSong} play style="listItemAudio" /> : null}
+        {birdData.status.startQ ? (<Player link={clickSong} play={true} style="listItemAudio" level={levelCount} />, console.log('answer')): null}
         <Button
-        variant="outlined"
-        className="nextButton"
-        onClick={nextButtonClickHandler}
-        disabled={birdData.status.noRightAnswer && !birdData.status.isAnswered}
-      >
-        Next level
-      </Button>
-
+          variant="outlined"
+          className="button"
+          onClick={nextButtonClickHandler}
+          disabled={birdData.status.noRightAnswer && !birdData.status.isAnswered}
+        >
+          Next level
+        </Button>
       </Container>
-          </>
-
+    </>
   ) : (
     <LastPage
       score={score}
