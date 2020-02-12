@@ -29,10 +29,7 @@ function LastPage({ score, levelCount, setData, setScore, setLevel }) {
       <Container className="lastPageContainer">
         <Card className="congratCard">
           <h2> Поздравляю!</h2>
-          <img
-            src='src/assets/seniorLevel.jpg'
-            className="lastPageImg"
-          />
+          <img src="src/assets/seniorLevel.jpg" className="lastPageImg" />
           <p> Bы набрали {score.score} баллов из 30</p>
           <Button onClick={tryClickHandler} className="button">
             Попробовать снова
