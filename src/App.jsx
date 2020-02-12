@@ -93,7 +93,7 @@ export default function App() {
   };
 
   const clickHandler = (species, id, e) => {
-      e.preventDefault();
+    e.preventDefault();
     const answerBird = birdState[0][levelCount][id - 1];
     setLoading(true);
     getBirdData(species).then(data => {
@@ -115,6 +115,12 @@ export default function App() {
 
     if (rightAnswer.title === species) {
       answerBird.status[1] = 'rightAnswer';
+      !birdData.status.isAnswered
+        ? setScore({
+            score: score.score + (5 - score.try),
+            try: score.try + 1,
+          })
+        : null;
       setData({
         ...birdData,
         status: {
@@ -127,10 +133,6 @@ export default function App() {
         },
       });
       setSong('src/assets/correct-answer.mp3');
-      setScore({
-        score: score.score + (5 - score.try),
-        try: score.try + 1,
-      });
     } else {
       answerBird.status[1] = 'wrongAnswer';
       setData({
@@ -174,7 +176,7 @@ export default function App() {
           birdData={data}
           loading={loading}
         />
-        {birdData.status.startQ ? <Player link={clickSong} play={true} style="listItemAudio" /> : null}
+        {birdData.status.startQ ? <Player link={clickSong} play style="listItemAudio" /> : null}
       </Container>
       <Button
         variant="outlined"
@@ -195,6 +197,13 @@ export default function App() {
           setScore({
             ...score,
             try: 0,
+          });
+          setData({
+            ...birdData,
+            status: {
+              ...birdData.status,
+              startQ: false,
+            },
           });
         }}
         disabled={birdData.status.noRightAnswer && !birdData.status.isAnswered}
